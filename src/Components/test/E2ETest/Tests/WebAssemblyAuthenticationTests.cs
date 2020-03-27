@@ -55,15 +55,12 @@ namespace Microsoft.AspNetCore.Components.E2ETest.Tests
                 .Build();
         }
 
+        public override Task InitializeAsync() => base.InitializeAsync(Guid.NewGuid().ToString());
+
         protected override void InitializeAsyncCore()
         {
-            Browser.Navigate().GoToUrl("data:");
             Navigate("/", noReload: true);
             EnsureDatabaseCreated(_serverFixture.Host.Services);
-            Browser.ExecuteJavaScript("sessionStorage.clear()");
-            Browser.ExecuteJavaScript("localStorage.clear()");
-            Browser.Manage().Cookies.DeleteAllCookies();
-            Browser.Navigate().Refresh();
             WaitUntilLoaded();
         }
 
@@ -312,6 +309,7 @@ namespace Microsoft.AspNetCore.Components.E2ETest.Tests
         {
             Browser.Navigate().GoToUrl(new Uri(new Uri(Browser.Url), "/authentication/login?returnUrl=https%3A%2F%2Fwww.bing.com").AbsoluteUri);
             WaitUntilLoaded(skipHeader: true);
+            Browser.Exists(By.CssSelector("[style=\"display: block;\"]"));
             Assert.NotEmpty(Browser.GetBrowserLogs(LogLevel.Severe));
         }
 
