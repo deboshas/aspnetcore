@@ -303,9 +303,7 @@ namespace Microsoft.AspNetCore.Components.E2ETest.Tests
             // Clear the existing storage on the page and refresh
             Browser.ExecuteJavaScript("sessionStorage.clear()");
             Browser.Navigate().Refresh();
-            Browser.Exists(By.PartialLinkText("Log in"));
 
-            Browser.FindElement(By.PartialLinkText("Log in")).Click();
             ValidateLoggedIn(userName);
         }
 
@@ -373,6 +371,7 @@ namespace Microsoft.AspNetCore.Components.E2ETest.Tests
 
         private void CompleteProfileDetails()
         {
+            Browser.Exists(By.PartialLinkText("Home"));
             Browser.Contains("/preferences", () => Browser.Url);
             Browser.FindElement(By.Id("color-preference")).SendKeys("Red");
             Browser.FindElement(By.Id("submit-preference")).Click();
