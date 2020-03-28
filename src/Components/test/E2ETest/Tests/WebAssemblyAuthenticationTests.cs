@@ -258,6 +258,7 @@ namespace Microsoft.AspNetCore.Components.E2ETest.Tests
             var userName = $"{Guid.NewGuid()}@example.com";
             var password = $"!Test.Password1$";
             RegisterCore(userName, password);
+            CompleteProfileDetails();
 
             ValidateLogout();
         }
@@ -270,6 +271,7 @@ namespace Microsoft.AspNetCore.Components.E2ETest.Tests
             var userName = $"{Guid.NewGuid()}@example.com";
             var password = $"!Test.Password1$";
             RegisterCore(userName, password);
+            CompleteProfileDetails();
 
             ValidateLogout();
 
@@ -295,11 +297,12 @@ namespace Microsoft.AspNetCore.Components.E2ETest.Tests
             var userName = $"{Guid.NewGuid()}@example.com";
             var password = $"!Test.Password1$";
             RegisterCore(userName, password);
+            CompleteProfileDetails();
             ValidateLoggedIn(userName);
 
             // Clear the existing storage on the page and refresh
-            Browser.ExecuteJavaScript("sessionStorage.clear()");
-            Browser.Navigate().Refresh();
+            Browser.Exists(By.Id("test-clear-storage")).Click();
+            Browser.Exists(By.Id("test-refresh-page")).Click();
 
             ValidateLoggedIn(userName);
         }
